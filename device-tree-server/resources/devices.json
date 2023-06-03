@@ -1,0 +1,122 @@
+{
+    "hubs":[
+        {
+            "id": 1,
+            "vendorId": "vendorId_1",
+            "productId": "productId_1",
+            "type": "hub",
+            "description": "Hub #1"
+        },
+        {
+            "id": 2,
+            "vendorId": "vendorId_2",
+            "productId": "productId_2",
+            "type": "hub",
+            "description": "Hub #2"
+        },
+        {
+            "id": 3,
+            "vendorId": "vendorId_3",
+            "productId": "productId_3",
+            "type": "hub",
+            "description": "Hub #3"
+        }
+    ],
+    "types": [
+        "Samsung",
+        "iPhone",
+        "Xiaomi"
+    ],
+    "devices": [
+        {
+            "id": 4,
+            "vendorId": "vendorId_1",
+            "productId": "productId_1",
+            "type": "device",
+            "description": "Device #4",
+            "hubId": 1,
+            "deviceType":"Samsung"
+        },
+        {
+            "id": 5,
+            "vendorId": "vendorId_2",
+            "productId": "productId_2",
+            "type": "device",
+            "description": "Device #5",
+            "hubId": 2,
+            "deviceType":"iPhone"
+        },
+        {
+            "id": 6,
+            "vendorId": "vendorId_3",
+            "productId": "productId_3",
+            "type": "device",
+            "description": "Device #6",
+            "hubId": 3,
+            "deviceType":"Xiaomi"
+        },
+        {
+            "id": 7,
+            "vendorId": "vendorId_1",
+            "productId": "productId_1",
+            "type": "device",
+            "description": "Device #7",
+            "hubId": 1,
+            "deviceType":"Samsung"
+        },
+        {
+            "id": 8,
+            "vendorId": "vendorId_2",
+            "productId": "productId_2",
+            "type": "device",
+            "description": "Device #8",
+            "hubId": 2,
+            "deviceType":"Xiaomi"
+        },
+        {
+            "id": 9,
+            "vendorId": "vendorId_3",
+            "productId": "productId_3",
+            "type": "device",
+            "description": "Device #9",
+            "hubId": 3,
+            "deviceType":"iPhone"
+        },
+        {
+            "id": 10,
+            "vendorId": "vendorId_1",
+            "productId": "productId_1",
+            "type": "device",
+            "description": "Device #10",
+            "hubId": 1,
+            "deviceType":"iPhone"
+        },
+        {
+            "id": 11,
+            "vendorId": "vendorId_1",
+            "productId": "productId_1",
+            "type": "device",
+            "description": "Device #11",
+            "hubId": 1,
+            "deviceType":"Samsung"
+        },
+        {
+            "id": 12,
+            "vendorId": "vendorId_3",
+            "productId": "productId_3",
+            "type": "device",
+            "description": "Device #12",
+            "hubId": 3,
+            "deviceType":"Xiaomi"
+        },
+        {
+            "id": 13,
+            "vendorId": "vendorId_1",
+            "productId": "productId_1",
+            "type": "device",
+            "description": "Device #13",
+            "hubId": 1,
+            "deviceType":"Samsung"
+        }
+    ]
+}
