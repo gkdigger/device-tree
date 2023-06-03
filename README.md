@@ -24,7 +24,7 @@ The solution was tested manually on the following environment:
 The following is test use case:
 1. Build and run server (see instructions below).
 2. Build and run client (see instructions below).
-3. Send POST request notifying about connected/disconnected device. The solution supports two POST method APIs: `/connected` and `/disconnected`. 
+3. Send POST request notifying about connected/disconnected device. The solution supports two POST method APIs: `/connected` and `/disconnected`. These APIs trigger SSE message to the client.
 Requests' formats and examples of notifications can be found in `device-tree-client/scripts` directory. 
 It is possible to send the requests running curl from command line or using Postman application.
 ## Build and run
