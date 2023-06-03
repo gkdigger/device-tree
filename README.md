@@ -9,7 +9,7 @@ Server updates regarding connected/disconnected devices are sent by Server-Sent 
 - Connection managers on client and server side are implemented using Factory design pattern. 
 It allows adding other connection types, such as Web Socket, easily.
 - Initial Tree data is static and loaded from `device-tree-server/resources/devices.json`.
-- Changes in the tree are not persistant.
+- Changes in the tree are not persistent.
 - The solution supports adding/removing devices only, though adding support of hubs is very straight forward and easy. 
 - I decided to manage data cache in client independently of the server, though it is possible to call `/devices` API on receiving each SSE message from the server.
 My consideration was that, in case of very long device list, it will be ineffective in terms of bandwidth usage.
