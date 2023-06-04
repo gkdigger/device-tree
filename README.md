@@ -8,7 +8,11 @@ Getting device list is available by HTTP GET method API `/devices`.
 Server updates regarding connected/disconnected devices are sent by Server-Sent Events (SSE). 
 - Connection managers on client and server side are implemented using Factory design pattern. 
 It allows adding other connection types, such as Web Socket, easily.
-- Initial Tree data is static and loaded from `device-tree-server/resources/devices.json`.
+- Initial Tree data is static and loaded from `device-tree-server/resources/devices.json`. It has three properties:
+  * hubs - array of existing hubs
+  * types - array of existing device types (iPhone, Samsung, Xiaomi)
+  * devices - array of connected devices
+For simplicity, I assume that each hubId value from device array appear in hubs array and each deviceType value from device array appear in types array accordingly.
 - Changes in the tree are not persistent.
 - The solution supports adding/removing devices only, though adding support of hubs is very straight forward and easy. 
 - I decided to manage data cache in client independently of the server, though it is possible to call `/devices` API on receiving each SSE message from the server.
