@@ -37,7 +37,7 @@ class Devices {
         this._listeners = new Set<IDevicesConnectionListener>();
     }
 
-    public get devices() : any {
+    public get devices() :  Map<number, Device> {
         return this._devices;
     }
 
@@ -63,7 +63,7 @@ class Devices {
         this._listeners.delete(listener);
     }
 
-    public getJson(): any[] {
+    public getJson(): Device[] {
         const deviceArray = Array.from(this._devices.values());
         return deviceArray;
     }
