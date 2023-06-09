@@ -1,6 +1,7 @@
 import React from "react";
 import { Tree, TreeNode } from 'react-organizational-chart';
 import './DeviceTreeView.css'
+import { Device } from "../model/DevicesData";
 
 enum DeviceTypes {
     Device = 0,
@@ -9,15 +10,15 @@ enum DeviceTypes {
 
 function DeviceTreeView(params: any) {
     const sortType = params.sortType;
-    const devices:any[] = params.devices;
+    const devices:Device[] = params.devices;
     const deviceTypes = [DeviceTypes.Device, DeviceTypes.Hub];
     
-    const iterateDevicesHierarchy = (devices:any[], parentId:number|null): any  => {
+    const iterateDevicesHierarchy = (devices:Device[], parentId:number|null): any  => {
         return(<>
         {
-            devices.filter((device: any) => {
+            devices.filter((device: Device) => {
                 return device._parentId == parentId;
-            }).map((device:any) => {
+            }).map((device:Device) => {
                 if (device._type == 9) {
                     return (
                         <TreeNode key={device._id} label={<div className="styled-node">
@@ -61,9 +62,9 @@ function DeviceTreeView(params: any) {
                     return (
                         <TreeNode key={index} label={<div className="styled-node">{DeviceTypes[type]}s</div>}>
                         {
-                            devices.filter((device: any) => {
+                            devices.filter((device: Device) => {
                                 return device._type == type;
-                            }).map((device: any) => {
+                            }).map((device: Device) => {
                                 return (
                                     <TreeNode key={device._id} label={<div className="styled-node">
                                             <div><b>Type:</b> {DeviceTypes[device._type]}</div>

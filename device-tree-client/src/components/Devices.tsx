@@ -3,13 +3,13 @@ import ConnectionClientManager from "../api/connectivity/ConnectionClientManager
 import { config } from "../config";
 import { getDevices } from "../api/devices";
 import DeviceTreeView from './DeviceTreeView';
-import DevicesData from '../model/DevicesData';
+import DevicesData, { Device } from '../model/DevicesData';
 
 const devicesData = new DevicesData();
 
 function Devices() {
     const [ listening, setListening ] = useState(false);
-    const [ devices, setDevices ] = useState(new Array());
+    const [ devices, setDevices ] = useState(new Array<Device>());
     const [ focusedTab, setFocusedTab ] = useState(0);
     useEffect( () => {
         if (!listening) {

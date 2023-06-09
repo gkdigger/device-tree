@@ -1,7 +1,17 @@
-export default class DevicesData {
-    private _data:any[] = [];
+interface Device {
+    _id:number;
+    _type: number;
+    _vendorId: number;
+    _productId: number;
+    _parentId: number;
+    _stringDescriptor: string;
+
+}
+
+ export default class DevicesData {
+    private _data:Device[] = [];
     
-    public addDevice(device: any) {
+    public addDevice(device: Device) {
         if (this._data) {
             const prevDevice:any[] = this._data.filter((d: any) => {
                 return d._id === device._id;
@@ -12,7 +22,7 @@ export default class DevicesData {
         }
     }
 
-    public removeDevice(deviceId: number): any {
+    public removeDevice(deviceId: number) {
         if (this._data) {
             this._data = this._data.filter((device: any) => {
                 return device._id !== deviceId;
@@ -20,12 +30,14 @@ export default class DevicesData {
         }
     }
  
-    public get data() : any[] {
+    public get data() : Device[] {
         return this._data;
     }
      
     public set data(v : any[]) {
-        this._data = v;
+        this._data = <Array<Device>>v;
     }
     
 }
+
+export type { Device };
