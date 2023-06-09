@@ -2,38 +2,54 @@ import React from "react";
 import { Tree, TreeNode } from 'react-organizational-chart';
 import './DeviceTreeView.css'
 
+enum DeviceTypes {
+    Device = 0,
+    Hub = 9
+}
+
 function DeviceTreeView(params: any) {
     const sortType = params.sortType;
-    const devices = params.devices;
+    const devices:any[] = params.devices;
+    const deviceTypes = [DeviceTypes.Device, DeviceTypes.Hub];
     
+    const iterateDevicesHierarchy = (devices:any[], parentId:number|null): any  => {
+        return(<>
+        {
+            devices.filter((device: any) => {
+                return device._parentId == parentId;
+            }).map((device:any) => {
+                if (device._type == 9) {
+                    return (
+                        <TreeNode key={device._id} label={<div className="styled-node">
+                        <div><b>Type:</b>  {DeviceTypes[device._type]}</div>
+                        <div><b>Vendor:</b> {device._vendorId}</div>
+                        <div><b>Product:</b> {device._productId}</div>
+                        <div><b>Description:</b> {device._stringDescriptor}</div>
+                    </div>}>
+                        {iterateDevicesHierarchy(devices, device._id)}
+                    </TreeNode>    
+                    );
+            } else {
+                    return (
+                        <TreeNode key={device._id} label={<div className="styled-node">
+                        <div><b>Type:</b> {DeviceTypes[device._type]}</div>
+                        <div><b>Vendor:</b> {device._vendorId}</div>
+                        <div><b>Product:</b> {device._productId}</div>
+                        <div><b>Description:</b> {device._stringDescriptor}</div>
+                    </div>}></TreeNode>
+                    );
+    
+                }
+            })
+    
+        }</>
+        )
+        
+    };
     const DevicesByHubs = () => (
         <Tree label={<div><b>Root</b></div>}>
             {
-                devices.hubs.map((hub: any) => {
-                    return (
-                        <TreeNode key={hub.id} label={<div className="styled-node">
-                                            <div><b>Type:</b> Hub</div>
-                                            <div><b>Vendor:</b> {hub.vendorId}</div>
-                                            <div><b>Product:</b> {hub.productId}</div>
-                                            <div><b>Description:</b> {hub.description}</div>
-                                            </div>}>
-                        {
-                            devices.devices.filter((device: any) => {
-                                return device.hubId === hub.id;
-                            }).map((device: any) => {
-                                return (
-                                    <TreeNode key={device.id} label={<div className="styled-node">
-                                            <div><b>Type:</b> Device</div>
-                                            <div><b>Vendor:</b> {device.vendorId}</div>
-                                            <div><b>Product:</b> {device.productId}</div>
-                                            <div><b>Description:</b> {device.description}</div>
-                                        </div>}></TreeNode>
-                                );
-                            })
-                        }
-                        </TreeNode> 
-                    );
-                })
+                iterateDevicesHierarchy(devices, null)
             }
         </Tree>
     );
@@ -41,19 +57,19 @@ function DeviceTreeView(params: any) {
     const DevicesByType = () => (
         <Tree label={<div><b>Root</b></div>}>
             {
-                devices.types.map((type: any, index:number) => {
+                deviceTypes.map((type: DeviceTypes, index:number) => {
                     return (
-                        <TreeNode key={index} label={<div className="styled-node">{type}</div>}>
+                        <TreeNode key={index} label={<div className="styled-node">{DeviceTypes[type]}s</div>}>
                         {
-                            devices.devices.filter((device: any) => {
-                                return device.deviceType === type;
+                            devices.filter((device: any) => {
+                                return device._type == type;
                             }).map((device: any) => {
                                 return (
-                                    <TreeNode key={device.id} label={<div className="styled-node">
-                                            <div><b>Type:</b> Device</div>
-                                            <div><b>Vendor:</b> {device.vendorId}</div>
-                                            <div><b>Product:</b> {device.productId}</div>
-                                            <div><b>Description:</b> {device.description}</div>
+                                    <TreeNode key={device._id} label={<div className="styled-node">
+                                            <div><b>Type:</b> {DeviceTypes[device._type]}</div>
+                                            <div><b>Vendor:</b> {device._vendorId}</div>
+                                            <div><b>Product:</b> {device._productId}</div>
+                                            <div><b>Description:</b> {device._stringDescriptor}</div>
                                         </div>}></TreeNode>
                                 );
                             })
@@ -68,7 +84,7 @@ function DeviceTreeView(params: any) {
 
     return (
         <div>
-                {(sortType == 0 && devices.hubs) ? <DevicesByHubs /> : (sortType == 1 && devices.types)? <DevicesByType />: <div>No data</div>}
+                {(sortType == 0 && devices) ? <DevicesByHubs /> : (sortType == 1 && devices)? <DevicesByType />: <div>No data</div>}
         </div>
     );
 }

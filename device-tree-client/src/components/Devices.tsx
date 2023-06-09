@@ -9,16 +9,16 @@ const devicesData = new DevicesData();
 
 function Devices() {
     const [ listening, setListening ] = useState(false);
-    const [ devices, setDevices ] = useState({});
+    const [ devices, setDevices ] = useState(new Array());
     const [ focusedTab, setFocusedTab ] = useState(0);
     useEffect( () => {
         if (!listening) {
             getDevices((data: any, error: any) => {
                 if (data) {
                     devicesData.data = data;
-                    setDevices(data);
+                    setDevices(devicesData.data);
                 } else {
-                    setDevices({});
+                    setDevices([]);
                 }
 
                 if (!error) {
@@ -26,12 +26,12 @@ function Devices() {
                     connection.connect((data: any) => {
                         if (data && data.connected) {
                             devicesData.addDevice(data.connected);
-                            setDevices({...devicesData.data});
+                            setDevices([...devicesData.data]);
                         } else if (data && data.disconnected) {
                             if (data.disconnected) {
-                                const deviceId: number = data.disconnected.deviceId;
+                                const deviceId: number = data.disconnected;
                                 devicesData.removeDevice(deviceId);
-                                setDevices({...devicesData.data});
+                                setDevices([...devicesData.data]);
                             }
                         }
                     });    
