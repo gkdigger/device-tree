@@ -55,6 +55,10 @@ class Devices {
         });
     }
 
+    public reset() {
+        this._devices.clear();
+    }
+    
     public addListener(listener: IDevicesConnectionListener) {
         this._listeners.add(listener);
     }

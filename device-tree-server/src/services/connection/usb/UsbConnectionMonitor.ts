@@ -7,12 +7,11 @@ export default class UsbConnectionMonitor {
 
         usb.useUsbDkBackend();
         usb.on("attach", (device) => {
-            this.getDeviceData(device);
+            this.addDevice(device);
         });
         usb.on("detach", (device) => {
             this.connectedDevices.deleteDevice(device.deviceAddress);
         });
-        
     }
 
     private getDescriptorStringValue(device: usb.Device, descriptor_index: number)  {
@@ -32,14 +31,17 @@ export default class UsbConnectionMonitor {
         });
     }
 
-    public async start() {
+    private async getConnectedDevices() {
         const deviceList = usb.getDeviceList();
         for (const device of deviceList) {
-             await this.getDeviceData(device);
+             await this.addDevice(device);
         }
     }
+    public async start() {
+        await this.getConnectedDevices();
+    }
     
-    private async getDeviceData(device: usb.Device) {
+    private async addDevice(device: usb.Device) {
         if (device && device.deviceDescriptor) {
             const deviceType = device.deviceDescriptor.bDeviceClass;
             if (deviceType == 0 || deviceType == 9) {
@@ -80,7 +82,7 @@ export default class UsbConnectionMonitor {
                 let parentId = null;
                 if (device.parent) {
                     parentId = device.parent.deviceAddress;
-                    this.getDeviceData(device.parent);
+                    this.addDevice(device.parent);
                 }
     
                 const connectedDevice = new Device(device.deviceAddress, deviceType, device.deviceDescriptor.idVendor, device.deviceDescriptor.idProduct, parentId, stringDescriptor);
