@@ -42,17 +42,21 @@ class Devices {
     }
 
     public addDevice(device: Device) {
-        this._devices.set(device.id, device);
-        this._listeners.forEach((listener) => {
-            listener.deviceAdded(device);
-        });
+        if (!this._devices.has(device.id)) {
+            this._devices.set(device.id, device);
+            this._listeners.forEach((listener) => {
+                listener.deviceAdded(device);
+            });    
+        }
     }
 
     public deleteDevice(deviceId: number) {
-        this._devices.delete(deviceId);
-        this._listeners.forEach((listener) => {
-            listener.deviceRemoved(deviceId);
-        });
+        if (this._devices.has(deviceId)) {
+            this._devices.delete(deviceId);
+            this._listeners.forEach((listener) => {
+                listener.deviceRemoved(deviceId);
+            });    
+        }
     }
 
     public reset() {
