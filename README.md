@@ -15,7 +15,7 @@ My consideration was that, in case of very long device list, it will be ineffect
 However, for small number of nodes, it is very demonstrative.
 ## Testing
 The solution was tested manually on the following environment:
-- **OS:** Windows 11, MacOS Ventura
+- **OS:** Windows 11
 - **Node:** v16.15.1, v18.16.0
 - **Browsers:** Chrome, Edge, Safari
 
