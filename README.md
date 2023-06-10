@@ -8,14 +8,8 @@ Getting device list is available by HTTP GET method API `/devices`.
 Server updates regarding connected/disconnected devices are sent by Server-Sent Events (SSE). 
 - Connection managers on client and server side are implemented using Factory design pattern. 
 It allows adding other connection types, such as Web Socket, easily.
-- Initial Tree data is static and loaded from `device-tree-server/resources/devices.json`. It has three properties:
-  * hubs - array of existing hubs
-  * types - array of existing device types (iPhone, Samsung, Xiaomi)
-  * devices - array of connected devices
-For simplicity, I assume that each hubId value from device array appear in hubs array and each deviceType value from device array appear in types array accordingly.
-- Changes in the tree are not persistent.
-- The solution supports adding/removing devices only, though adding support of hubs is very straight forward and easy. 
-- I decided to manage data cache in client independently of the server, though it is possible to call `/devices` API on receiving each SSE message from the server.
+- I used [node-usb](https://github.com/node-usb/node-usb) library for communicating with USB devices.
+- I decided to manage data cache in client independently of the server (**thick client** approach), though it is possible to call `/devices` API on receiving each SSE message from the server.
 My consideration was that, in case of very long device list, it will be ineffective in terms of bandwidth usage.
 - I used [react-organizational-chart](https://www.npmjs.com/package/react-organizational-chart) for UI presentation of hierarchy tree of hubs and devices. I understand that it does not meet requirements of responsive UI (it looks good in Desktop Web Browser only).
 However, for small number of nodes, it is very demonstrative.
