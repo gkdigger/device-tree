@@ -3,10 +3,9 @@ This is client/server solution that presents a live tree of the devices connecte
 The tree consists of USB hubs and devices connected to them. 
 Each USB hub is a branch of the tree. Each device is a leaf of a branch.
 ## Design
-- Client and Server are connected by HTTP.
+- Client and Server are connected by HTTP. Getting device list is available by HTTP GET method API `/devices`.
+Server updates regarding connected/disconnected devices are sent by Server-Sent Events (SSE).
 - The solution supports two USB class codes: `00h`(Device) and `09h`(Hub).
-Getting device list is available by HTTP GET method API `/devices`.
-Server updates regarding connected/disconnected devices are sent by Server-Sent Events (SSE). 
 - Connection managers on client and server side are implemented using Factory design pattern. 
 It allows adding other connection types, such as Web Socket, easily.
 - I used [node-usb](https://github.com/node-usb/node-usb) library for communicating with USB devices.
