@@ -22,7 +22,7 @@ The solution was tested manually on the following environment:
 ### Test use case:
 1. Build and run server (see instructions below).
 2. Build and run client (see instructions below).
-3. Attach/detach USB device
+3. Attach/detach USB device to the server machine.
 ## Build and run
 ### Server
 ```
