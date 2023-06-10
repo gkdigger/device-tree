@@ -24,6 +24,8 @@ The solution was tested manually on the following environment:
 1. Build and run server (see instructions below).
 2. Build and run client (see instructions below).
 3. Attach/detach USB devices to the server machine.
+### Observed issues:
+I observed an issue with `node-usb` on using external USB hub. The library remembers location in the hierarchy of a device attached to external hub even after detaching and re-attaching the same device to another hub.
 ## Build and run
 ### Server
 ```
