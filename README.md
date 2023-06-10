@@ -3,7 +3,8 @@ This is client/server solution that presents a live tree of the devices connecte
 The tree consists of USB hubs and devices connected to them. 
 Each USB hub is a branch of the tree. Each device is a leaf of a branch.
 ## Design
-- Client and Server are connected by HTTP. 
+- Client and Server are connected by HTTP.
+- The solution supports two USB class codes: `00h`(Device) and `09h`(Hub).
 Getting device list is available by HTTP GET method API `/devices`.
 Server updates regarding connected/disconnected devices are sent by Server-Sent Events (SSE). 
 - Connection managers on client and server side are implemented using Factory design pattern. 
@@ -22,7 +23,7 @@ The solution was tested manually on the following environment:
 ### Test use case:
 1. Build and run server (see instructions below).
 2. Build and run client (see instructions below).
-3. Attach/detach USB device to the server machine.
+3. Attach/detach USB devices to the server machine.
 ## Build and run
 ### Server
 ```
