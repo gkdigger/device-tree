@@ -19,7 +19,7 @@ The solution was tested manually on the following environment:
 - **Node:** v16.15.1, v18.16.0
 - **Browsers:** Chrome, Edge, Safari
 
-The following is test use case:
+### Test use case:
 1. Build and run server (see instructions below).
 2. Build and run client (see instructions below).
 3. Attach/detach USB device
