@@ -11,6 +11,7 @@ It allows adding other connection types, such as Web Socket, easily.
 - I used [node-usb](https://github.com/node-usb/node-usb) library for communicating with USB devices.
 - I decided to manage data cache in client independently of the server (**thick client** approach), though it is possible to call `/devices` API on receiving each SSE message from the server (**thin client** approach).
 My consideration was that it will be ineffective in terms of bandwidth usage in case of very long device list.
+- Server keeps flat list of hubs and devices. Hierarchy can be recognized using device `_id` and `_parentId` properties. As device id I used USB deviceAddress property.
 - I used [react-organizational-chart](https://www.npmjs.com/package/react-organizational-chart) for UI presentation of hierarchy tree of hubs and devices. I understand that it does not meet requirements of responsive UI (it looks good in Desktop Web Browser only).
 However, for small number of nodes, it is very demonstrative.
 ## Testing
