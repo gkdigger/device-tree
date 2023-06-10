@@ -82,7 +82,6 @@ export default class UsbConnectionMonitor {
                 let parentId = null;
                 if (device.parent) {
                     parentId = device.parent.deviceAddress;
-                    this.addDevice(device.parent);
                 }
     
                 const connectedDevice = new Device(device.deviceAddress, deviceType, device.deviceDescriptor.idVendor, device.deviceDescriptor.idProduct, parentId, stringDescriptor);
