@@ -25,7 +25,8 @@ The solution was tested manually on the following environment:
 2. Build and run client (see instructions below).
 3. Attach/detach USB devices to the server machine.
 ### Observed issues:
-I observed an issue with `node-usb` on using external USB hub. The library remembers location in the hierarchy of a device attached to external hub even after detaching and re-attaching the same device to another hub.
+- I observed an issue with `node-usb` on using external USB hub. The library remembers location in the hierarchy of a device attached to external hub even after detaching and re-attaching the same device to another hub.
+- WebUSB attach/detach listener didn't work on my machine.
 ## Build and run
 ### Server
 ```
