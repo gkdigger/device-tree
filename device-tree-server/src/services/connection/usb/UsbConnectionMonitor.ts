@@ -1,16 +1,32 @@
 import { usb } from "usb"
 import { Device, Devices } from "../../../model/Devices";
 
-export default class UsbConnectionMonitor {
+interface IUsbConnectionListener {
+    deviceAdded(deviceId: number): void;
+    deviceRemoved(deviceId: number) : void;
+}
+
+class UsbConnectionMonitor {
     private connectedDevices = Devices.getSharedInstance();
+    private _listeners: Set<IUsbConnectionListener>;
     constructor() {
+        this._listeners = new Set<IUsbConnectionListener>();
 
         usb.useUsbDkBackend();
-        usb.on("attach", (device) => {
-            this.addDevice(device);
+        usb.on("attach", async (device) => {
+            // await this.addDevice(device);
+            await this.getConnectedDevices();
+            this._listeners.forEach((listener) => {
+                listener.deviceAdded(device.deviceAddress);
+            });
+    
         });
-        usb.on("detach", (device) => {
-            this.connectedDevices.deleteDevice(device.deviceAddress);
+        usb.on("detach", async (device) => {
+            // this.connectedDevices.deleteDevice(device.deviceAddress);
+            await this.getConnectedDevices();
+            this._listeners.forEach((listener) => {
+                listener.deviceRemoved(device.deviceAddress);
+            });    
         });
     }
 
@@ -33,6 +49,7 @@ export default class UsbConnectionMonitor {
 
     private async getConnectedDevices() {
         const deviceList = usb.getDeviceList();
+        this.connectedDevices.reset();
         for (const device of deviceList) {
              await this.addDevice(device);
         }
@@ -90,4 +107,15 @@ export default class UsbConnectionMonitor {
             }
         }
     }
+
+    public addListener(listener: IUsbConnectionListener) {
+        this._listeners.add(listener);
+    }
+
+    public removeListener(listener: IUsbConnectionListener) {
+        this._listeners.delete(listener);
+    }
+
 }
+
+export { UsbConnectionMonitor, IUsbConnectionListener }

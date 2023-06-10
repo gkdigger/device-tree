@@ -1,8 +1,3 @@
-interface IDevicesConnectionListener {
-    deviceAdded(device: Device): void;
-    deviceRemoved(deviceId: number) : void;
-}
-
 class Device {
     private _id:number;
     private _type: number;
@@ -29,12 +24,10 @@ class Device {
 
 class Devices {
     private _devices: Map<number, Device>;
-    private _listeners: Set<IDevicesConnectionListener>;
     private static _sharedInstance: Devices;
 
     private constructor() {
         this._devices = new Map<number, Device>();
-        this._listeners = new Set<IDevicesConnectionListener>();
     }
 
     public get devices() :  Map<number, Device> {
@@ -43,28 +36,18 @@ class Devices {
 
     public addDevice(device: Device) {
         this._devices.set(device.id, device);
-        this._listeners.forEach((listener) => {
-            listener.deviceAdded(device);
-        });
     }
 
     public deleteDevice(deviceId: number) {
         this._devices.delete(deviceId);
-        this._listeners.forEach((listener) => {
-            listener.deviceRemoved(deviceId);
-        });
     }
 
-    public reset() {
-        this._devices.clear();
+    public getDevice(deviceId: number): Device {
+        return this._devices.get(deviceId);
     }
     
-    public addListener(listener: IDevicesConnectionListener) {
-        this._listeners.add(listener);
-    }
-
-    public removeListener(listener: IDevicesConnectionListener) {
-        this._listeners.delete(listener);
+    public reset() {
+        this._devices.clear();
     }
 
     public getJson(): Device[] {
@@ -80,4 +63,4 @@ class Devices {
     }
 }
 
-export {Device, Devices, IDevicesConnectionListener}
+export {Device, Devices}

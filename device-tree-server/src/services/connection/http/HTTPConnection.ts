@@ -1,7 +1,8 @@
 import express, { Request, Response } from 'express';
 import IConnection from "../IConnection";
 import ClientManager from '../ClientManager';
-import {Device, Devices, IDevicesConnectionListener} from '../../../model/Devices';
+import { Devices } from '../../../model/Devices';
+import { IUsbConnectionListener } from '../usb/UsbConnectionMonitor';
 import { config } from '../../../config';
 
 const clientManager = new ClientManager();
@@ -10,10 +11,10 @@ const devices = Devices.getSharedInstance();
 
 export default class HTTPConnection implements IConnection {
     private _app: express.Express = express();
-    private static DeviceConnectionListener = class implements IDevicesConnectionListener{
-      deviceAdded(device: Device): void {
+    private static DeviceConnectionListener = class implements IUsbConnectionListener{
+      deviceAdded(deviceId: number): void {
         const newMessage = {
-          connected: device
+          connected: devices.getDevice(deviceId)
         }
         HTTPConnection.sendEventsToAll(newMessage);          
       }
@@ -27,12 +28,11 @@ export default class HTTPConnection implements IConnection {
         }
   }
 
-  private _connectionListener = new HTTPConnection.DeviceConnectionListener();
+  private _usbConnectionListener = new HTTPConnection.DeviceConnectionListener();
   
     constructor() {
       this._app.use(express.json());
       this._app.use(express.urlencoded({extended: false}));
-      devices.addListener(this._connectionListener);
     }
 
     connect(): void {
@@ -43,6 +43,11 @@ export default class HTTPConnection implements IConnection {
       this._app.get('/events', HTTPConnection.eventHandler);
     }
 
+    
+    public get usbConnectionListener() : IUsbConnectionListener {
+      return this._usbConnectionListener;
+    }
+    
     private static devicesHandler(request: Request, response: Response) {     
       response.setHeader('Access-Control-Allow-Origin', '*').json(devices.getJson());
     }
